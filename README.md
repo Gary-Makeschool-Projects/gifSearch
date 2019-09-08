@@ -11,4 +11,5 @@ Tenor gif search web application built using flask.
 
 -   If you don't have pipenv, install it with `brew install pipenv`.
 -   Clone the directory, cd into it, and then run `pipenv shell` followed by `pipenv install`
--   Run the command `flask run` or `python3 app.py` and everything, in theory, should work!
+-   Set your environment variables: `export FLASK_ENV=development` and `export API_KEY= <your tenor api key>`
+-   Run the command `flask run` or `python3 gifSearch.py` and everything should work!
