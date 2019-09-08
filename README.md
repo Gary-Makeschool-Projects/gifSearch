@@ -2,6 +2,9 @@
 
 Tenor gif search web application built using flask.
 
+## :camera: Screenshots
+<img src="/screenshots/gifsearch.gif" width="55%"></img>
+
 ## To get up and running:
 
 -   If you don't have pipenv, install it with `brew install pipenv`.
