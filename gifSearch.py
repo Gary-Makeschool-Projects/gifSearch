@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import words
 
 
 try:
@@ -14,8 +15,16 @@ except:
 try:
     # import flask module
     from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
+    from flask_sqlalchemy import SQLAlchemy
     os.environ['FLASK_ENV']
+    basedir = os.path.abspath(os.path.dirname(__file__))
+  
     app = Flask(__name__)  # app name
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+    app.config['SECRET_KEY'] = '\x04q\xb3\x08\xe0tn\xc1n\xa4\x90\x82\xd8\xf4\xe8\x87\xf0\x90\xe3bhI~\xd5'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+    os.path.join(basedir, 'server.db')
+    db = SQLAlchemy(app)
     portnum = 8080  # run server on this port
 except ImportError as error:
     sys.stderr.write(
@@ -71,11 +80,13 @@ def index():
             '\x1b[1;31m' + 'Unknown error occured' + '\x1b[0m')
 
     if request.method == 'POST':
-        data = request.get_json()
-        result = ''
+        # data = request.get_json(force=True)
 
+        # print(type(data['search_term']))
+        # term = str(data['search_term'])
         form = request.form.to_dict()
         search_term = form['search']
+        print(form)
         key = os.environ['API_KEY']
 
         try:
@@ -113,18 +124,23 @@ def index():
             print('Took', t1 - t0, 'seconds')
 
     return render_template('index.html')
+# this is also another test route
+@app.route('/countries')
+def countrydic():
+    res = Country.query.all()
+    list_countries = [r.as_dict() for r in res]
+    return jsonify(list_countries)
+# this route was just meant for testing purposes ignore
+# @app.route('/reciever', methods=['POST'])
+# def receive():
+#     data = request.get_json(force=True)
+#     result = ''
+#     print(data['search_term'])
+#     # for item in data:
+#     #     # loop over every row
+#     #     result += item[0] + '\n'
 
-
-@app.route('/reciever', methods=['POST'])
-def receive():
-    data = request.get_json(force=True)
-    result = ''
-    print(data['search_term'])
-    # for item in data:
-    #     # loop over every row
-    #     result += item[0] + '\n'
-
-    return data
+#     return data
 
 
 if __name__ == "__main__":
