@@ -1,6 +1,6 @@
 # gifSearch
 
-Tenor gif search web application built using flask.
+Tenor gif search web application.
 
 ## :camera: Example
 
