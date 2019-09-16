@@ -18,12 +18,12 @@ try:
     from flask_sqlalchemy import SQLAlchemy
     os.environ['FLASK_ENV']
     basedir = os.path.abspath(os.path.dirname(__file__))
-  
+
     app = Flask(__name__)  # app name
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
     app.config['SECRET_KEY'] = '\x04q\xb3\x08\xe0tn\xc1n\xa4\x90\x82\xd8\xf4\xe8\x87\xf0\x90\xe3bhI~\xd5'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-    os.path.join(basedir, 'server.db')
+        os.path.join(basedir, 'server.db')
     db = SQLAlchemy(app)
     portnum = 8080  # run server on this port
 except ImportError as error:
@@ -80,19 +80,21 @@ def index():
             '\x1b[1;31m' + 'Unknown error occured' + '\x1b[0m')
 
     if request.method == 'POST':
-        # data = request.get_json(force=True)
+        data = request.get_json(force=True)
 
         # print(type(data['search_term']))
         # term = str(data['search_term'])
-        form = request.form.to_dict()
-        search_term = form['search']
-        print(form)
+        #form = request.form.to_dict()
+        print("This is the search term")
+        search_term = data['search_term']
+
+        print(search_term)
         key = os.environ['API_KEY']
 
         try:
 
             search = "https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (
-                search_term, key, 10)
+                search_term, key, 1)
             t0 = time.time()  # initial request time
             # check server response
             response = requests_retry_session().get(search)
@@ -104,11 +106,13 @@ def index():
                 results = data['results']
                 for item in results:
                     gifs.append(item['media'][0]['gif']['url'])
+                    print(item)
                 if not gifs:
                     empty = "Did not find any gifs with that word please try again"
                     return render_template('index.html', empty=empty)
                 else:
-                    return render_template('index.html', search_term=search_term, gifs=gifs)
+                    print('Test call')
+                    return render_template('index.html', gifs=gifs)
         except requests.exceptions.Timeout:
             pass
         # maybe set up for a retry, or continue in a retry loop
