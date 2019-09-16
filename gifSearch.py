@@ -13,7 +13,7 @@ except:
 
 try:
     # import flask module
-    from flask import Flask, render_template, url_for, request, redirect, flash
+    from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
     os.environ['FLASK_ENV']
     app = Flask(__name__)  # app name
     portnum = 8080  # run server on this port
@@ -55,7 +55,7 @@ def requests_retry_session(retries=3, backoff_factor=0.3, status_forcelist=(500,
     return session
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     try:
@@ -69,7 +69,11 @@ def index():
     except:
         sys.stderr.write(
             '\x1b[1;31m' + 'Unknown error occured' + '\x1b[0m')
+
     if request.method == 'POST':
+        data = request.get_json()
+        result = ''
+
         form = request.form.to_dict()
         search_term = form['search']
         key = os.environ['API_KEY']
@@ -89,7 +93,11 @@ def index():
                 results = data['results']
                 for item in results:
                     gifs.append(item['media'][0]['gif']['url'])
-                return render_template('index.html', search_term=search_term, gifs=gifs)
+                if not gifs:
+                    empty = "Did not find any gifs with that word please try again"
+                    return render_template('index.html', empty=empty)
+                else:
+                    return render_template('index.html', search_term=search_term, gifs=gifs)
         except requests.exceptions.Timeout:
             pass
         # maybe set up for a retry, or continue in a retry loop
@@ -105,6 +113,18 @@ def index():
             print('Took', t1 - t0, 'seconds')
 
     return render_template('index.html')
+
+
+@app.route('/reciever', methods=['POST'])
+def receive():
+    data = request.get_json(force=True)
+    result = ''
+    print(data['search_term'])
+    # for item in data:
+    #     # loop over every row
+    #     result += item[0] + '\n'
+
+    return data
 
 
 if __name__ == "__main__":
