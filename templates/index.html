@@ -8,6 +8,9 @@
             href="{{ url_for('static', filename='css/main.css')}}"
             rel="stylesheet"
         />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{url_for('static', filename='/jquery/jquery.js') }}">\x3C/script>')</script>
+        <script>window.jQuery || document.write('<script src="{{url_for('static', filename='/jquery/auto.js') }}">\x3C/script>')</script>
     </head>
     <body>
         <div class="s010">
@@ -16,7 +19,6 @@
                     <div class="basic-search">
                         <div class="input-field">
                             <input
-                                method="POST"
                                 id="search"
                                 type="text"
                                 name="search"
@@ -35,6 +37,7 @@
                                 </svg>
                             </div>
                         </div>
+                       
                         <ul>
                             {% for url in gifs %}        
                             <script language="JavaScript">
@@ -42,10 +45,41 @@
                             </script>
                             {% endfor %}
                         </ul>
+                        <p> {{empty}}</p>
                     </div>
                 </div>
             </form>
         </div>
-       
+<script src="{{url_for('static', filename='jquery/auto.js')}}"></script>
+    <!--    <script> 
+            $("#search").on('change keyup paste', function() {
+                console.log('fuck yah')
+                    });
+            
+        </script>
+        <script type="text/javascript">
+            // setup some JSON to use
+            var cars = [
+                { "make":"Porsche", "model":"911S" },
+                { "make":"Mercedes-Benz", "model":"220SE" },
+                { "make":"Jaguar","model": "Mark VII" }
+            ];
+            
+            window.onload = function() {
+                // setup the button click
+                document.getElementById("theButton").onclick = function() {
+                    doWork()
+                };
+            }
+            
+            function doWork() {
+                // ajax the JSON to the server
+                $.post("receiver", cars, function(){
+            
+                });
+                // stop link reloading the page
+             event.preventDefault();
+            }
+            </script> -->
     </body>
 </html>
