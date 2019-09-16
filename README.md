@@ -3,7 +3,6 @@
 Tenor gif search web application built using flask.
 
 ## :camera: Example
-<img src="/screenshots/search.png" width="55%"></img>
 
 <img src="/screenshots/gifsearch.gif" width="55%"></img>
 
