@@ -1,7 +1,7 @@
 import sys
 import os
 import time
-import words
+#import words
 
 
 try:
@@ -80,13 +80,13 @@ def index():
             '\x1b[1;31m' + 'Unknown error occured' + '\x1b[0m')
 
     if request.method == 'POST':
-        data = request.get_json(force=True)
-
-        # print(type(data['search_term']))
+        #data = request.get_json(force=True)
+        a = request.form['search']
         # term = str(data['search_term'])
-        #form = request.form.to_dict()
+        form = request.form.to_dict()
         print("This is the search term")
-        search_term = data['search_term']
+        #search_term = data['search_term']
+        search_term = a
 
         print(search_term)
         key = os.environ['API_KEY']
@@ -112,7 +112,7 @@ def index():
                     return render_template('index.html', empty=empty)
                 else:
                     print('Test call')
-                    return render_template('index.html', gifs=gifs)
+                    return render_template('index.html', search_term=search_term, gifs=gifs)
         except requests.exceptions.Timeout:
             pass
         # maybe set up for a retry, or continue in a retry loop
