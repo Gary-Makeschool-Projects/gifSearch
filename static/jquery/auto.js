@@ -11,9 +11,15 @@ function magicalShit() {
     // yikes bro ._.
     var yikes = JSON.stringify(idkwhattonamethisobject);
     // ajax the JSON to the server aka send that shit to the backend
-    $.post('index', yikes, function() {});
+    $.post('test', yikes, function(data) {
+        const ref = $('#gifs');
+        ref.empty();
+        for (url of data) {
+            ref.append(`<img src="${url}"/>`);
+        }
+    });
     // stop link reloading the page becasue that shit was pretty annoying
-    event.preventDefault();
+    //event.preventDefault();
 }
 // this function does absolutley fucking nothing but just listens for changes on the client side
 $(document).ready(function() {

@@ -1,7 +1,7 @@
 import sys
 import os
 import time
-#import words
+# import words
 
 
 try:
@@ -80,15 +80,14 @@ def index():
             '\x1b[1;31m' + 'Unknown error occured' + '\x1b[0m')
 
     if request.method == 'POST':
-        #data = request.get_json(force=True)
+        # data = request.get_json(force=True)
         a = request.form['search']
-        # term = str(data['search_term'])
-        form = request.form.to_dict()
-        print("This is the search term")
-        #search_term = data['search_term']
-        search_term = a
+        # form = request.form.to_dict()
 
-        print(search_term)
+        # search_term = data['search_term']
+        search_term = a
+        print("This is the search term " + search_term)
+
         key = os.environ['API_KEY']
 
         try:
@@ -98,26 +97,34 @@ def index():
             t0 = time.time()  # initial request time
             # check server response
             response = requests_retry_session().get(search)
+
             # okay status code
             if response.status_code == 200:
                 r = response  # response object
-                data = json.loads(r.content)
+                data = r.json()
+                # data = json.loads(r.content)
+                print('------------------')
+                print(data)
+                print('----------------------')
                 gifs = []
                 results = data['results']
                 for item in results:
                     gifs.append(item['media'][0]['gif']['url'])
-                    print(item)
+                    print('++++++++++++++++++++++')
+                    print(item['media'][0]['gif']['url'])
+                    print('++++++++++++++++++++++')
                 if not gifs:
+                    print('Called empty array')
                     empty = "Did not find any gifs with that word please try again"
                     return render_template('index.html', empty=empty)
                 else:
-                    print('Test call')
+                    print('Returning the html')
                     return render_template('index.html', search_term=search_term, gifs=gifs)
         except requests.exceptions.Timeout:
-            pass
+            print('Session timeout')
         # maybe set up for a retry, or continue in a retry loop
         except requests.exceptions.TooManyRedirects:
-            pass
+            print('Too many redirects')
             # tell the user their URL was bad and try a different one
         except requests.exceptions.RequestException as e:
             # catastrophic error. we are fucked! bail!
@@ -135,16 +142,58 @@ def countrydic():
     list_countries = [r.as_dict() for r in res]
     return jsonify(list_countries)
 # this route was just meant for testing purposes ignore
-# @app.route('/reciever', methods=['POST'])
-# def receive():
-#     data = request.get_json(force=True)
-#     result = ''
-#     print(data['search_term'])
-#     # for item in data:
-#     #     # loop over every row
-#     #     result += item[0] + '\n'
+@app.route('/test', methods=['POST'])
+def receive():
+    if request.method == 'POST':
+        data = request.get_json(force=True)
+        search_term = data['search_term']
+        print("This is the search term " + search_term)
 
-#     return data
+        key = os.environ['API_KEY']
+
+        try:
+
+            search = "https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (
+                search_term, key, 1)
+            t0 = time.time()  # initial request time
+            # check server response
+            response = requests_retry_session().get(search)
+
+            # okay status code
+            if response.status_code == 200:
+                r = response  # response object
+                data = r.json()
+                # data = json.loads(r.content)
+                print('------------------')
+                print(data)
+                print('----------------------')
+                gifs = []
+                results = data['results']
+                for item in results:
+                    gifs.append(item['media'][0]['gif']['url'])
+                    print('++++++++++++++++++++++')
+                    print(item['media'][0]['gif']['url'])
+                    print('++++++++++++++++++++++')
+                if not gifs:
+                    print('Called empty array')
+                    empty = "Did not find any gifs with that word please try again"
+                    return redirect(url_for('index', empty=empty))
+                else:
+                    print('Returning the html')
+                    return jsonify(gifs)
+        except requests.exceptions.Timeout:
+            print('Session timeout')
+        # maybe set up for a retry, or continue in a retry loop
+        except requests.exceptions.TooManyRedirects:
+            print('Too many redirects')
+            # tell the user their URL was bad and try a different one
+        except requests.exceptions.RequestException as e:
+            # catastrophic error. we are fucked! bail!
+            print(e)
+            sys.exit(1)
+        finally:
+            t1 = time.time()  # end request time
+            print('Took', t1 - t0, 'seconds')
 
 
 if __name__ == "__main__":
