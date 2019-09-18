@@ -94,7 +94,7 @@ def index():
         try:
 
             search = "https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (
-                search_term, key, 2)
+                search_term, key, 10)
             t0 = time.time()  # initial request time
             # check server response
             printme = requests_retry_session()
