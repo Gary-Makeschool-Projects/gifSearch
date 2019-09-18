@@ -4,8 +4,6 @@ import time
 import unittest
 # import words
 
-#mark is here
-
 
 try:
     if '3' in sys.version[0]:
@@ -97,19 +95,26 @@ def index():
         try:
 
             search = "https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (
-                search_term, key, 10)
+                search_term, key, 2)
             t0 = time.time()  # initial request time
             # check server response
+            printme = requests_retry_session()
+            print("session be like: ")
+            print(printme)
             response = requests_retry_session().get(search)
+            print("response be like: ")
+            print(response)
 
             # okay status code
             if response.status_code == 200:
                 r = response  # response object
                 data = r.json()
-                # data = json.loads(r.content)
-                print('------------------')
+                print("data be like:")
                 print(data)
-                print('----------------------')
+                # data = json.loads(r.content)
+                # print('------------------')
+                # print(data)
+                # print('----------------------')
                 gifs = []
                 results = data['results']
                 for item in results:
