@@ -16,8 +16,11 @@ except:
 try:
     # import flask module
     from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
+    # import SQLAlchemy
     from flask_sqlalchemy import SQLAlchemy
+    # flask enviornment variable
     os.environ['FLASK_ENV']
+    # database path
     basedir = os.path.abspath(os.path.dirname(__file__))
 
     app = Flask(__name__)  # app name
@@ -67,6 +70,44 @@ def requests_retry_session(retries=3, backoff_factor=0.3, status_forcelist=(500,
 
 
 @app.route('/', methods=['GET', 'POST'])
+def root():
+    if request.method == 'GET':
+        search_term = 'yay'
+        apikey = os.getenv('API_KEY')
+        lmt = 10
+        trending = "https://api.tenor.com/v1/random?q=%s&key=%s&limit=%s" % (
+            search_term, apikey, lmt)
+
+        # check server response
+        printme = requests_retry_session()
+        print("session be like: ")
+        print(printme)
+        response = requests_retry_session().get(trending)
+        print("response be like: ")
+        print(response)
+
+        # okay status code
+        if response.status_code == 200:
+            r = response  # response object
+            data = r.json()
+            print("data be like:")
+            print(data)
+            gifs = []
+            results = data['results']
+            for item in results:
+                gifs.append(item['media'][0]['gif']['url'])
+                print('++++++++++++++++++++++')
+                print(item['media'][0]['gif']['url'])
+                print('++++++++++++++++++++++')
+                if not gifs:
+                    print('Called empty array')
+                    empty = "Did not find any gifs with that word please try again"
+                    return render_template('index.html', empty=empty)
+                else:
+                    print('Returning the html')
+                    return render_template('index.html', gifs=gifs)
+
+
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     try:
