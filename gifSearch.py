@@ -3,6 +3,8 @@ import os
 import time
 # import words
 
+#mark is here
+
 
 try:
     if '3' in sys.version[0]:
@@ -21,7 +23,8 @@ try:
 
     app = Flask(__name__)  # app name
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-    app.config['SECRET_KEY'] = '\x04q\xb3\x08\xe0tn\xc1n\xa4\x90\x82\xd8\xf4\xe8\x87\xf0\x90\xe3bhI~\xd5'
+    app.config[
+        'SECRET_KEY'] = '\x04q\xb3\x08\xe0tn\xc1n\xa4\x90\x82\xd8\xf4\xe8\x87\xf0\x90\xe3bhI~\xd5'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
         os.path.join(basedir, 'server.db')
     db = SQLAlchemy(app)
@@ -136,12 +139,16 @@ def index():
 
     return render_template('index.html')
 # this is also another test route
+
+
 @app.route('/countries')
 def countrydic():
     res = Country.query.all()
     list_countries = [r.as_dict() for r in res]
     return jsonify(list_countries)
 # this route was just meant for testing purposes ignore
+
+
 @app.route('/test', methods=['POST'])
 def receive():
     if request.method == 'POST':
