@@ -11,7 +11,7 @@ function magicalShit() {
     // yikes bro ._.
     var yikes = JSON.stringify(idkwhattonamethisobject);
     // ajax the JSON to the server aka send that shit to the backend
-    $.post('test', yikes, function(data) {
+    $.post('auto', yikes, function(data) {
         const ref = $('#gifs');
         ref.empty();
         for (url of data) {
