@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html>
-<style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial;
-}
-
-.header {
-  text-align: center;
-  padding: 32px;
-}
-
-/* Create two equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-}
-
-.column img {
-  margin-top: 12px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-</style>
-
-<body>
     <head>
+
+            <style>
+                * {
+                  box-sizing: border-box;
+                }
+
+                body {
+                  margin: 0;
+                  font-family: Arial;
+                }
+
+                .header {
+                  text-align: center;
+                  padding: 32px;
+                }
+
+                /* Create two equal columns that floats next to each other */
+                .column {
+                  float: left;
+                  width: 50%;
+                  padding: 10px;
+                }
+
+                .column img {
+                  margin-top: 12px;
+                }
+
+                /* Clear floats after the columns */
+                .row:after {
+                  content: "";
+                  display: table;
+                  clear: both;
+                }
+            </style>
+
+
+
         <link
             href="https://fonts.googleapis.com/css?family=Poppins:400,600,700"
             rel="stylesheet"
@@ -74,14 +76,24 @@ body {
                             </div>
                         </div>
                        
-                        <ul id="gifs">
+                      <!--   <ul id="gifs">
                             {% for url in gifs %}        
                             <script language="JavaScript">
                                 document.write( "<img src=\"" + {{ url|tojson|safe }} + "\"></img>" );
                             </script>
                             {% endfor %}
-                            
-                        </ul>
+                        </ul> -->
+                        {% for url_row in gifs | batch(4, '&nbsp;') %}
+                         <div class = "row">
+                            {% for url in url_row %}
+                            <div class='column'> 
+                                <script language="JavaScript">
+                                document.write( "<img src=\"" + {{ url|tojson|safe }} + "\"></img>" );
+                                </script>
+                            </div>          
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
                         <p> {{empty}}</p>
                     </div>
                 </div>
