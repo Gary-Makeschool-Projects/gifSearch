@@ -93,7 +93,7 @@ def index():
         try:
 
             search = "https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (
-                search_term, key, 1)
+                search_term, key, 10)
             t0 = time.time()  # initial request time
             # check server response
             response = requests_retry_session().get(search)
@@ -154,11 +154,10 @@ def receive():
         try:
 
             search = "https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (
-                search_term, key, 1)
+                search_term, key, 10)
             t0 = time.time()  # initial request time
             # check server response
             response = requests_retry_session().get(search)
-
             # okay status code
             if response.status_code == 200:
                 r = response  # response object
@@ -177,7 +176,7 @@ def receive():
                 if not gifs:
                     print('Called empty array')
                     empty = "Did not find any gifs with that word please try again"
-                    return redirect(url_for('index', empty=empty))
+                    return jsonify(gifs)
                 else:
                     print('Returning the html')
                     return jsonify(gifs)

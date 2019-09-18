@@ -19,7 +19,7 @@ function magicalShit() {
         }
     });
     // stop link reloading the page becasue that shit was pretty annoying
-    //event.preventDefault();
+    event.preventDefault();
 }
 // this function does absolutley fucking nothing but just listens for changes on the client side
 $(document).ready(function() {
