@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+        * {
+          box-sizing: border-box;
+        }
 
-            <style>
-                * {
-                  box-sizing: border-box;
-                }
+        body {
+          margin: 0;
+          font-family: Arial;
+        }
 
-                body {
-                  margin: 0;
-                  font-family: Arial;
-                }
+        .header {
+          text-align: center;
+          padding: 32px;
+        }
 
-                .header {
-                  text-align: center;
-                  padding: 32px;
-                }
+        /* Create two equal columns that floats next to each other */
+        .column {
+          float: left;
+          width: 50%;
+          padding: 10px;
+        }
 
-                /* Create two equal columns that floats next to each other */
-                .column {
-                  float: left;
-                  width: 50%;
-                  padding: 10px;
-                }
+        .column img {
+          margin-top: 12px;
+        }
 
-                .column img {
-                  margin-top: 12px;
-                }
-
-                /* Clear floats after the columns */
-                .row:after {
-                  content: "";
-                  display: table;
-                  clear: both;
-                }
-            </style>
-
-
+        /* Clear floats after the columns */
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+        </style>
+<body>
 
         <link
             href="https://fonts.googleapis.com/css?family=Poppins:400,600,700"
@@ -88,7 +86,7 @@
                             {% for url in url_row %}
                             <div class='column'> 
                                 <script language="JavaScript">
-                                document.write( "<img src=\"" + {{ url|tojson|safe }} + "\"></img>" );
+                                document.write( "<img src=\"" + {{ url|tojson|safe }} + "\"   style=\"width:100%\"    ></img>" );
                                 </script>
                             </div>          
                             {% endfor %}
@@ -99,5 +97,6 @@
                 </div>
             </form>
         </div>
+
     </body>
 </html>
