@@ -22,13 +22,14 @@ try:
     os.environ['FLASK_ENV']
     # database path
     basedir = os.path.abspath(os.path.dirname(__file__))
-
     app = Flask(__name__)  # app name
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # file age
     app.config[
-        'SECRET_KEY'] = '\x04q\xb3\x08\xe0tn\xc1n\xa4\x90\x82\xd8\xf4\xe8\x87\xf0\x90\xe3bhI~\xd5'
+        'SECRET_KEY'] = '\x04q\xb3\x08\xe0tn\xc1n\xa4\x90\x82\xd8\xf4\xe8\x87\xf0\x90\xe3bhI~\xd5'  # secret key encoding
+    # data base URI
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
         os.path.join(basedir, 'server.db')
+    # creat database object with alchemy
     db = SQLAlchemy(app)
     portnum = 8080  # run server on this port
 except ImportError as error:
@@ -71,6 +72,17 @@ def requests_retry_session(retries=3, backoff_factor=0.3, status_forcelist=(500,
 
 @app.route('/', methods=['GET', 'POST'])
 def root():
+    """ Cool root route.
+    @GET:
+        summary: index endpoint will render file 'index.html'
+        description: Get
+        responses:
+            200:
+                description: index.html returned
+                schema: indexSchema
+            404:
+                description: index not found
+    """
     if request.method == 'GET':
         search_term = 'yay'
         apikey = os.getenv('API_KEY')
@@ -85,6 +97,7 @@ def root():
         response = requests_retry_session().get(trending)
         print("response be like: ")
         print(response)
+    if request.method ==
 
         # okay status code
         if response.status_code == 200:
@@ -110,6 +123,25 @@ def root():
 
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    """ Cool index route.
+    @GET:
+        summary: index endpoint will render file 'index.html'
+        description: Get
+        responses:
+            200:
+                description: index.html returned
+                schema: indexSchema
+            404:
+                description: index not found.
+    @POST:
+        summary:
+        description:
+        responses:
+            200:
+                description:
+            400:
+                description:
+    """
     try:
         os.environ['API_KEY']
     except KeyError:
@@ -183,7 +215,8 @@ def index():
         finally:
             t1 = time.time()  # end request time
             print('Took', t1 - t0, 'seconds')
-
+        x = render_template('index.html')
+        print(x)
     return render_template('index.html')
 # this is also another test route
 
@@ -193,11 +226,29 @@ def countrydic():
     res = Country.query.all()
     list_countries = [r.as_dict() for r in res]
     return jsonify(list_countries)
-# this route was just meant for testing purposes ignore
 
 
-@app.route('/test', methods=['POST'])
+@app.route('/auto', methods=['POST'])
 def receive():
+    """ Cool index route.
+    @GET:
+        summary: index endpoint will render file 'index.html'
+        description: Get
+        responses:
+            200:
+                description: index.html returned
+                schema: indexSchema
+            404:
+                description: index not found.
+    @POST:
+        summary:
+        description:
+        responses:
+            200:
+                description:
+            400:
+                description:
+    """
     if request.method == 'POST':
         data = request.get_json(force=True)
         search_term = data['search_term']
