@@ -81,9 +81,9 @@
                             {% endfor %}
                         </ul> -->
                         {% for url_row in gifs | batch(4, '&nbsp;') %}
-                         <div class = "row" id="gifs">
+                         <div class = "row">
                             {% for url in url_row %}
-                            <div class='span4'> 
+                            <div class='column'> 
                                 <script language="JavaScript">
                                 document.write( "<img src=\"" + {{ url|tojson|safe }} + "\"></img>" );
                                 </script>
