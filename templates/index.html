@@ -40,15 +40,16 @@
                                 </svg>
                             </div>
                         </div>
-                       
-                      <!--   <ul id="gifs">
+                        <div class="row">
+                         <ul id="gifs">
                             {% for url in gifs %}        
                             <script language="JavaScript">
                                 document.write( "<img src=\"" + {{ url|tojson|safe }} + "\"></img>" );
                             </script>
                             {% endfor %}
-                        </ul> -->
-                        {% for url_row in gifs | batch(4, '&nbsp;') %}
+                        </ul> 
+                    </div>
+                        <!-- {% for url_row in gifs | batch(4, '&nbsp;') %}
                          <div id="gifs" class = "row">
                             {% for url in url_row %}
                             <div class='column'> 
@@ -58,7 +59,7 @@
                             </div>          
                             {% endfor %}
                         </div>
-                        {% endfor %}
+                        {% endfor %} -->
                         <p> {{empty}}</p>
                     </div>
                 </div>
