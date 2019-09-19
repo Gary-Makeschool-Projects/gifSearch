@@ -91,33 +91,32 @@ def root():
             search_term, apikey, lmt)
 
         # check server response
-        printme = requests_retry_session()
-        print("session be like: ")
-        print(printme)
+        #printme = requests_retry_session()
+        #print("session be like: ")
+        # print(printme)
         response = requests_retry_session().get(trending)
-        print("response be like: ")
-        print(response)
-    if request.method ==
+        #print("response be like: ")
+        # print(response)
 
         # okay status code
         if response.status_code == 200:
             r = response  # response object
             data = r.json()
-            print("data be like:")
-            print(data)
+            #print("data be like:")
+            # print(data)
             gifs = []
             results = data['results']
             for item in results:
                 gifs.append(item['media'][0]['gif']['url'])
-                print('++++++++++++++++++++++')
-                print(item['media'][0]['gif']['url'])
-                print('++++++++++++++++++++++')
+                # print('++++++++++++++++++++++')
+                # print(item['media'][0]['gif']['url'])
+                # print('++++++++++++++++++++++')
                 if not gifs:
                     print('Called empty array')
                     empty = "Did not find any gifs with that word please try again"
                     return render_template('index.html', empty=empty)
                 else:
-                    print('Returning the html')
+                    # print('Returning the html')
                     return render_template('index.html', gifs=gifs)
 
 
@@ -161,7 +160,7 @@ def index():
 
         # search_term = data['search_term']
         search_term = a
-        print("This is the search term " + search_term)
+        #print("This is the search term " + search_term)
 
         key = os.environ['API_KEY']
 
@@ -171,19 +170,19 @@ def index():
                 search_term, key, 10)
             t0 = time.time()  # initial request time
             # check server response
-            printme = requests_retry_session()
-            print("session be like: ")
-            print(printme)
+            #printme = requests_retry_session()
+            #print("session be like: ")
+            # print(printme)
             response = requests_retry_session().get(search)
-            print("response be like: ")
-            print(response)
+            #print("response be like: ")
+            # print(response)
 
             # okay status code
             if response.status_code == 200:
                 r = response  # response object
                 data = r.json()
-                print("data be like:")
-                print(data)
+                #print("data be like:")
+                # print(data)
                 # data = json.loads(r.content)
                 # print('------------------')
                 # print(data)
@@ -192,15 +191,15 @@ def index():
                 results = data['results']
                 for item in results:
                     gifs.append(item['media'][0]['gif']['url'])
-                    print('++++++++++++++++++++++')
-                    print(item['media'][0]['gif']['url'])
-                    print('++++++++++++++++++++++')
+                    # print('++++++++++++++++++++++')
+                    # print(item['media'][0]['gif']['url'])
+                    # print('++++++++++++++++++++++')
                 if not gifs:
-                    print('Called empty array')
+                    # print('Called empty array')
                     empty = "Did not find any gifs with that word please try again"
                     return render_template('index.html', empty=empty)
                 else:
-                    print('Returning the html')
+                    # print('Returning the html')
                     return render_template('index.html', search_term=search_term, gifs=gifs)
         except requests.exceptions.Timeout:
             print('Session timeout')
@@ -252,7 +251,7 @@ def receive():
     if request.method == 'POST':
         data = request.get_json(force=True)
         search_term = data['search_term']
-        print("This is the search term " + search_term)
+        #print("This is the search term " + search_term)
 
         key = os.environ['API_KEY']
 
@@ -268,22 +267,22 @@ def receive():
                 r = response  # response object
                 data = r.json()
                 # data = json.loads(r.content)
-                print('------------------')
-                print(data)
-                print('----------------------')
+                # print('------------------')
+                # print(data)
+                # print('----------------------')
                 gifs = []
                 results = data['results']
                 for item in results:
                     gifs.append(item['media'][0]['gif']['url'])
-                    print('++++++++++++++++++++++')
-                    print(item['media'][0]['gif']['url'])
-                    print('++++++++++++++++++++++')
+                    # print('++++++++++++++++++++++')
+                    # print(item['media'][0]['gif']['url'])
+                    # print('++++++++++++++++++++++')
                 if not gifs:
-                    print('Called empty array')
+                    # print('Called empty array')
                     empty = "Did not find any gifs with that word please try again"
                     return jsonify(gifs)
                 else:
-                    print('Returning the html')
+                    # print('Returning the html')
                     return jsonify(gifs)
         except requests.exceptions.Timeout:
             print('Session timeout')

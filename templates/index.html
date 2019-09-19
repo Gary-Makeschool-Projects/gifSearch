@@ -84,7 +84,7 @@
                             {% endfor %}
                         </ul> -->
                         {% for url_row in gifs | batch(4, '&nbsp;') %}
-                         <div class = "row">
+                         <div id="gifs" class = "row">
                             {% for url in url_row %}
                             <div class='column'> 
                                 <script language="JavaScript">
