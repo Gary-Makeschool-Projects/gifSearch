@@ -105,7 +105,7 @@ def index():
     if request.method == 'GET':
         search_term = 'gary'
         apikey = os.getenv('API_KEY')
-        lmt = 10
+        lmt = 20
         rand = "https://api.tenor.com/v1/random?q=%s&key=%s&limit=%s" % (
             search_term, apikey, lmt)
         # check server response
@@ -132,7 +132,7 @@ def index():
         key = os.environ['API_KEY']
         try:
             search = "https://api.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (
-                search_term, key, 10)
+                search_term, key, 20)
             t0 = time.time()  # initial request time
             # check server response
             response = requests_retry_session().get(search)
