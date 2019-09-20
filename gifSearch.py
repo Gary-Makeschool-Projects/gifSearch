@@ -168,7 +168,59 @@ def index():
         x = render_template('index.html')
         print(x)
     return render_template('index.html')
-
+@app.route('/trending')
+def trending():
+    """ Cool index route.
+    @GET:
+        summary: index endpoint will render file 'index.html'
+        description: Get
+        responses:
+            200:
+                description: index.html returned
+                schema: indexSchema
+            404:
+                description: index not found.
+    @POST:
+        summary:
+        description:
+        responses:
+            200:
+                description:
+            400:
+                description:
+    """
+    try:
+        os.environ['API_KEY']
+    except KeyError:
+        sys.stderr.write(
+            '\x1b[1;31m' + 'Please set enviornment variable API_KEY' + '\x1b[0m')
+    except ImportError as error:
+        sys.stderr.write(
+            '\x1b[1;31m' + error + '\x1b[0m')
+    except:
+        sys.stderr.write(
+            '\x1b[1;31m' + 'Unknown error occured' + '\x1b[0m')
+    # listen for GET request
+    if request.method == 'GET':
+        apikey = os.getenv('API_KEY')
+        lmt = 10
+        trending = "https://api.tenor.com/v1/trending?key=%s&limit=%s" % (apikey, lmt)
+        # check server response
+        response = requests_retry_session().get(trending)
+        # okay status code
+        if response.status_code == 200:
+            r = response  # response object
+            data = r.json()
+            gifs = []
+            results = data['results']
+            for item in results:
+                gifs.append(item['media'][0]['gif']['url'])
+            if not gifs:
+                print('Called empty array')
+                empty = "Did not find any gifs with that word please try again"
+                return render_template('index.html', emtyp=empty)
+            else:
+                return render_template('trending.html', gifs=gifs)
 
 @app.route('/auto', methods=['POST'])
 def receive():
