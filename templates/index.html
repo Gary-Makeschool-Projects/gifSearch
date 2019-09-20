@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <title>Gif Search!</title>
     <head>
 <body>
 
@@ -11,6 +12,11 @@
             href="{{ url_for('static', filename='css/main.css')}}"
             rel="stylesheet"
         />
+        <link 
+            rel="shortcut icon" 
+            href="static/favicon.ico"
+        />
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="{{url_for('static', filename='/jquery/jquery.js') }}">\x3C/script>')</script>
         <script src="{{url_for('static', filename='jquery/auto.js')}}"></script> 
@@ -52,17 +58,6 @@
                             {% endfor %}
                         </ul> 
                         </div>
-                        <!-- {% for url_row in gifs | batch(4, '&nbsp;') %}
-                         <div class = "row">
-                            {% for url in url_row %}
-                            <div id="gifs" class='column'> 
-                                <script language="JavaScript">
-                                document.write( "<img src=\"" + {{ url|tojson|safe }} + "\" style=\"width:100%\" ></img>" );
-                                </script>
-                            </div>          
-                            {% endfor %}
-                        </div>
-                        {% endfor %} -->
                         <p> {{empty}}</p>
                     </div>
                 </div>

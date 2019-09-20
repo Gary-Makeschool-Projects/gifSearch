@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <title>Gif Search!</title>
     <head>
 <body>
 
@@ -54,17 +55,6 @@
                             {% endfor %}
                         </ul> 
                         </div>
-                        <!-- {% for url_row in gifs | batch(4, '&nbsp;') %}
-                         <div class = "row">
-                            {% for url in url_row %}
-                            <div id="gifs" class='column'> 
-                                <script language="JavaScript">
-                                document.write( "<img src=\"" + {{ url|tojson|safe }} + "\" style=\"width:100%\" ></img>" );
-                                </script>
-                            </div>          
-                            {% endfor %}
-                        </div>
-                        {% endfor %} -->
                         <p> {{empty}}</p>
                     </div>
                 </div>

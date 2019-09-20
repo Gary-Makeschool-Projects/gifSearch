@@ -280,13 +280,5 @@ def receive():
             t1 = time.time()  # end request time
             print('Took', t1 - t0, 'seconds')
 
-
-# test route for database
-# @app.route('/countries')
-# def countrydic():
-#     res = Country.query.all()
-#     list_countries = [r.as_dict() for r in res]
-#     return jsonify(list_countries)
-
 if __name__ == "__main__":
     app.run(debug=True, port=portnum)

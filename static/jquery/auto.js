@@ -26,6 +26,6 @@ $(document).ready(function() {
     $('#search').on('change keyup paste', function() {
         // lets call the magical function
         magicalShit();
-        console.log('i sense change...im calling the backend to beat your ass');
+        console.log('I sense change...Im calling the backend to beat your ass');
     });
 });
