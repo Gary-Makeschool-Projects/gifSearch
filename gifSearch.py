@@ -33,6 +33,9 @@ try:
 except ImportError as error:
     sys.stderr.write(
         '\x1b[1;31m' + error + '\x1b[0m')
+    
+
+
 except:
     sys.stderr.write(
         '\x1b[1;31m' + 'Please set Flask enviornment variable {FLASK_ENV}' + '\x1b[0m')
