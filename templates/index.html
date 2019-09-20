@@ -22,9 +22,12 @@
         <script src="{{url_for('static', filename='jquery/auto.js')}}"></script> 
     </head>
     <body>
+        <div>
             <form action="{{url_for('trending')}}">
                     <button class="myButton" onclick="{{url_for('trending')}}">Trending</button>
-                </form>
+            </form>
+        </div>
+
         <div class="s010">
             <form action="{{ url_for('index') }}" method="POST"> 
                 <div class="inner-form">

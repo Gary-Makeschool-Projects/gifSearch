@@ -16,6 +16,9 @@ body {
   margin: 0;
 }
 
+div {
+  text-align: center; 
+}
 /**
  * Add the correct display in IE 9-.
  */
